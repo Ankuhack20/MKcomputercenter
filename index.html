@@ -1,0 +1,683 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MK Computer Centre - Premier Computer Training Institute offering advanced tech courses including Web Development, Data Science, AI, and Ethical Hacking. Transform your career today.">
+    <title>MK Computer Centre | Premium Computer Training Institute</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Floating Utilities -->
+    <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Header / Navbar -->
+    <header class="main-header">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon"><i class="fas fa-graduation-cap"></i></span>
+                <span class="logo-text">MK <span class="accent-text">Computer Centre</span></span>
+            </a>
+            
+            <nav class="nav-menu" id="navMenu">
+                <a href="#hero" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#courses" class="nav-link">Courses</a>
+                <a href="#facilities" class="nav-link">Facilities</a>
+                <a href="#placements" class="nav-link">Placements</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="#contact" class="btn btn-primary btn-nav">Enroll Now</a>
+                <button class="hamburger" id="hamburgerMenu" aria-label="Toggle menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="container hero-grid">
+            <div class="hero-content" data-aos="fade-right">
+                <span class="badge">Transforming Futures Since 2010</span>
+                <h1>Master the Digital Era with <span class="gradient-text">Premium Tech Education</span></h1>
+                <p>Equip yourself with industry-demanded computer skills. From master diplomas and core fundamentals to advanced modern development stacks.</p>
+                <div class="hero-actions">
+                    <a href="#courses" class="btn btn-primary btn-lg">Explore Courses <i class="fas fa-arrow-right"></i></a>
+                    <a href="#about" class="btn btn-secondary btn-lg">Learn More</a>
+                </div>
+                <div class="hero-trust">
+                    <div class="trust-avatars">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Student">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Student">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Student">
+                    </div>
+                    <div class="trust-text">
+                        <strong>15,000+ Alumni</strong> global placement network
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual" data-aos="fade-left">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop&q=80" alt="Students Learning Tech">
+                    <div class="floating-card dynamic-card-1">
+                        <i class="fas fa-check-circle success-text"></i>
+                        <div>
+                            <h4>100% Practical</h4>
+                            <p>Hands-on Lab Training</p>
+                        </div>
+                    </div>
+                    <div class="floating-card dynamic-card-2">
+                        <i class="fas fa-briefcase accent-text"></i>
+                        <div>
+                            <h4>Top Placements</h4>
+                            <p>Leading Tech Firms</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section section-padding">
+        <div class="container about-grid">
+            <div class="about-visual" data-aos="fade-up">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&auto=format&fit=crop&q=80" alt="MK Computer Centre Facility">
+            </div>
+            <div class="about-content" data-aos="fade-up" data-aos-delay="100">
+                <span class="section-subtitle">Who We Are</span>
+                <h2>Empowering Careers Through Superior Computing Expertise</h2>
+                <p>MK Computer Centre has stood as a hallmark of excellence in technical education for over a decade. We bridge the critical gap between traditional academic knowledge and modern corporate requirements.</p>
+                <p>Our curriculum is dynamically responsive to industry shifts, meticulously structured by active technology leaders to transform absolute beginners into job-ready technical specialists.</p>
+                <div class="about-features">
+                    <div class="about-feat-item">
+                        <div class="icon-box"><i class="fas fa-certificate"></i></div>
+                        <div>
+                            <h4>ISO 9001:2015 Certified</h4>
+                            <p>Global standards in instructional methodologies.</p>
+                        </div>
+                    </div>
+                    <div class="about-feat-item">
+                        <div class="icon-box"><i class="fas fa-user-tie"></i></div>
+                        <div>
+                            <h4>Elite Technical Mentors</h4>
+                            <p>Learn directly from expert corporate consultants.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose-section section-padding bg-light">
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up">
+                <span class="section-subtitle">Why Choose Us</span>
+                <h2>The Standard in Technical Training Excellence</h2>
+            </div>
+            <div class="grid-3-col">
+                <div class="premium-card text-center" data-aos="fade-up" data-aos-delay="0">
+                    <div class="card-icon-container"><i class="fas fa-desktop"></i></div>
+                    <h3>1:1 System Allocation</h3>
+                    <p>Every student receives a dedicated modern computing system throughout their entire lab hours, maximizing practice time.</p>
+                </div>
+                <div class="premium-card text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-icon-container"><i class="fas fa-history"></i></div>
+                    <h3>Flexible Batch Timings</h3>
+                    <p>Tailored program schedules accommodating regular university students, working professionals, and weekend learners seamlessly.</p>
+                </div>
+                <div class="premium-card text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-icon-container"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <h3>Affordable Premium Pricing</h3>
+                    <p>High-caliber, elite tech education structured into reasonable, industry-competitive fees with interest-free installment options.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Courses Section -->
+    <section id="courses" class="courses-section section-padding">
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up">
+                <span class="section-subtitle">Our Curriculums</span>
+                <h2>Industry-Aligned Academic Pathways</h2>
+                <p class="section-desc">Select from our extensive portfolio of technical courses engineered to secure immediate premium professional employment.</p>
+            </div>
+            
+            <div class="grid-3-col">
+                <!-- MDCA -->
+                <div class="course-card" data-aos="fade-up">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=80" alt="MDCA Track">
+                        <span class="course-tag">Master Diploma</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>MDCA</h3>
+                        <p>Master Diploma in Computer Applications. Complete extensive structural computer training path targeting comprehensive multi-domain mastery.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 18 Months</span> <span><i class="far fa-file-alt"></i> Master Diploma</span></div>
+                    </div>
+                </div>
+                <!-- ADCA -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&auto=format&fit=crop&q=80" alt="ADCA Track">
+                        <span class="course-tag">Advanced Diploma</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>ADCA</h3>
+                        <p>Advanced Diploma in Computer Applications. Thorough integration of basic and advanced structural computer applications for enterprise roles.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 12 Months</span> <span><i class="far fa-file-alt"></i> Adv. Diploma</span></div>
+                    </div>
+                </div>
+                <!-- DCA -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?w=600&auto=format&fit=crop&q=80" alt="DCA Track">
+                        <span class="course-tag">Diploma</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>DCA</h3>
+                        <p>Diploma in Computer Applications. Concentrated industrial curriculum path establishing solid technical skill foundations for administrative environments.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 6 Months</span> <span><i class="far fa-file-alt"></i> Technical Diploma</span></div>
+                    </div>
+                </div>
+                <!-- Basic Course -->
+                <div class="course-card" data-aos="fade-up">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&auto=format&fit=crop&q=80" alt="Basic Computer Track">
+                        <span class="course-tag">Foundational</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>Basic Course</h3>
+                        <p>Fundamental computer architecture, operating system interfaces, MS-Paint, Notepad, Wordpad, and fundamental office operations (MS-Word, Excel, PowerPoint).</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 2 Months</span> <span><i class="far fa-file-alt"></i> Certificate</span></div>
+                    </div>
+                </div>
+                <!-- Web Designing -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80" alt="Web Designing Track">
+                        <span class="course-tag">Creative Design</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>Web Designing</h3>
+                        <p>Core design mechanics encompassing layout theories, static web structures, and interface components via core HTML and modular CSS architectures.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 2 Months</span> <span><i class="far fa-file-alt"></i> Design Cert</span></div>
+                    </div>
+                </div>
+                <!-- Video Editing -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&auto=format&fit=crop&q=80" alt="Video Editing Track">
+                        <span class="course-tag">Multimedia</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>Video Editing</h3>
+                        <p>High-grade commercial post-production workflows utilizing industry standard tools including Filmora and Adobe Premiere Pro environments.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 2 Months</span> <span><i class="far fa-file-alt"></i> Media Cert</span></div>
+                    </div>
+                </div>
+                <!-- Internet & Networking -->
+                <div class="course-card" data-aos="fade-up">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80" alt="Internet Core Track">
+                        <span class="course-tag">Infrastructure</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>Internet</h3>
+                        <p>Network troubleshooting steps, peer-to-peer setups, data routing configurations, web portals, portal logins, online works, and AI web systems exploration.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 2 Months</span> <span><i class="far fa-file-alt"></i> Networks Cert</span></div>
+                    </div>
+                </div>
+                <!-- Hardware Engineering -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1591238372338-22d30c883a86?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y29tcHV0ZXIlMjBoYXJkd2FyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Hardware Track">
+                        <span class="course-tag">Engineering</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>Hardware</h3>
+                        <p>Component assembly configurations, input/output device mapping, storage components, operating system integration, card-level testing, windows and software installation.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 3 Months</span> <span><i class="far fa-file-alt"></i> Tech Eng. Cert</span></div>
+                    </div>
+                </div>
+                <!-- Tally Prime, ERP-9 & GST -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1606857521015-7f9fcf423740?w=600&auto=format&fit=crop&q=80" alt="Financial Track">
+                        <span class="course-tag">Accounting</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>Tally Prime, ERP-9 & GST</h3>
+                        <p>Comprehensive corporate ledger structures, inventory control matrix, purchase orders, voucher logging, payroll management, taxation processing (GST, TCS, TDS), and balances.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 3 Months</span> <span><i class="far fa-file-alt"></i> Accounting Cert</span></div>
+                    </div>
+                </div>
+                <!-- Digital Marketing -->
+                <div class="course-card" data-aos="fade-up">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80" alt="Marketing Track">
+                        <span class="course-tag">Growth Track</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>Digital Marketing</h3>
+                        <p>Full suite growth frameworks covering search optimizations (SEO/SMO/On-Page), PPC campaign modeling, content strategies, video outreach, web design, and growth logic.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 4 Months</span> <span><i class="far fa-file-alt"></i> Marketing Spec.</span></div>
+                    </div>
+                </div>
+                <!-- AutoCAD -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1720879996903-24859d1df48f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXV0b2NhZHxlbnwwfHwwfHx8MA%3D%3D" alt="AutoCAD Track">
+                        <span class="course-tag">Design Engineering</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>AutoCAD</h3>
+                        <p>Precision blueprint design modeling involving structural 2D drafting, 3D transformations, isometric layouts, elevation mapping, and site plan schematics.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 3 Months</span> <span><i class="far fa-file-alt"></i> AutoCAD Spec.</span></div>
+                    </div>
+                </div>
+                <!-- DTP -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&auto=format&fit=crop&q=80" alt="DTP Track">
+                        <span class="course-tag">Publishing</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>DTP (Desktop Publishing)</h3>
+                        <p>Professional layout publication engineering using high-tier applications like Adobe Photoshop manipulation and PageMaker production frameworks.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 2 Months</span> <span><i class="far fa-file-alt"></i> DTP Diploma</span></div>
+                    </div>
+                </div>
+                <!-- Full Stack Web -->
+                <div class="course-card" data-aos="fade-up">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&auto=format&fit=crop&q=80" alt="Full Stack Track">
+                        <span class="course-tag">Programming</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>Full Stack Web</h3>
+                        <p>Complete dynamic application infrastructure training across frontend rendering (HTML, CSS, JavaScript) and robust backend engines (PHP, SQL relational structures).</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 6 Months</span> <span><i class="far fa-file-alt"></i> Dev Cert</span></div>
+                    </div>
+                </div>
+                <!-- Advanced Python & Languages -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop&q=80" alt="Languages Track">
+                        <span class="course-tag">Software Logic</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>Programming Languages</h3>
+                        <p>Foundational logic blocks and compilation tracks spanning structural C, modular C++, enterprise Java, foundational Python, Advanced Python, and relational MySQL stacks.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 4 Months</span> <span><i class="far fa-file-alt"></i> Code Expert</span></div>
+                    </div>
+                </div>
+                <!-- Basic + Advance Course -->
+                <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="course-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80" alt="Advanced Excel Track">
+                        <span class="course-tag">Extended Track</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>Basic + Advance Course</h3>
+                        <p>Comprehensive productivity suite training covering advanced analytical Excel models, SolidWorks tracking mechanisms, Rabbit applications, and high-performance UG (NX) processing.</p>
+                        <div class="course-meta"><span><i class="far fa-clock"></i> 4 Months</span> <span><i class="far fa-file-alt"></i> Suite Expert</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section id="facilities" class="facilities-section section-padding bg-light">
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up">
+                <span class="section-subtitle">Infrastructure</span>
+                <h2>World-Class Computing Environments</h2>
+            </div>
+            <div class="grid-4-col">
+                <div class="facility-card" data-aos="zoom-in" data-aos-delay="0">
+                    <div class="facility-icon"><i class="fas fa-server"></i></div>
+                    <h4>High-Spec Labs</h4>
+                    <p>Intel Core i7 systems outfitted with ultra-fast NVMe storage arrays and dual-monitor support.</p>
+                </div>
+                <div class="facility-card" data-aos="zoom-in" data-aos-delay="50">
+                    <div class="facility-icon"><i class="fas fa-wifi"></i></div>
+                    <h4>Gigabit Fiber Web</h4>
+                    <p>Uncapped, synchronous high-velocity connection lines ensuring zero latency access during cloud server configurations.</p>
+                </div>
+                <div class="facility-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="facility-icon"><i class="fas fa-book-reader"></i></div>
+                    <h4>Digital Knowledge Lab</h4>
+                    <p>Instant digital cataloging offering full research licenses to comprehensive technical resource databases globally.</p>
+                </div>
+                <div class="facility-card" data-aos="zoom-in" data-aos-delay="150">
+                    <div class="facility-icon"><i class="fas fa-bolt"></i></div>
+                    <h4>Dual Power Redundancy</h4>
+                    <p>Industrial grade uninterruptible power distribution grids guarantees learning flows continue without intermission.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placement Assistance Section -->
+    <section id="placements" class="placements-section section-padding">
+        <div class="container">
+            <div class="placement-wrapper bg-gradient">
+                <div class="placement-content" data-aos="fade-right">
+                    <span class="badge badge-white">Career Acceleration</span>
+                    <h2>Dedicated Enterprise Career Placement Hub</h2>
+                    <p>Our dedicated internal corporate relations office provides comprehensive pipeline training, intensive resume parsing optimization, mock technical interview drill arrays, and immediate direct entry pathways into elite regional enterprise firms.</p>
+                    <div class="placement-features">
+                        <div class="p-feat"><i class="fas fa-handshake"></i> 350+ Associated Corporate Partners</div>
+                        <div class="p-feat"><i class="fas fa-user-check"></i> Personalized Industry Mentor Match</div>
+                        <div class="p-feat"><i class="fas fa-briefcase"></i> Post-Graduate Placement Security Window</div>
+                    </div>
+                </div>
+                <div class="placement-logos" data-aos="fade-left">
+                    <div class="logo-cloud">
+                        <div class="partner-logo"><i class="fab fa-microsoft"></i> Microsoft</div>
+                        <div class="partner-logo"><i class="fab fa-amazon"></i> Amazon</div>
+                        <div class="partner-logo"><i class="fab fa-google"></i> Google</div>
+                        <div class="partner-logo"><i class="fab fa-ibm"></i> IBM</div>
+                        <div class="partner-logo"><i class="fab fa-accenture"></i> Accenture</div>
+                        <div class="partner-logo"><i class="fab fa-capgemini"></i> Capgemini</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section section-padding bg-dark text-white">
+        <div class="container grid-4-col text-center">
+            <div class="stat-item" data-aos="fade-up">
+                <span class="stat-number" data-target="15000">0</span><span class="stat-suffix">+</span>
+                <p>Alumni Graduated</p>
+            </div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="50">
+                <span class="stat-number" data-target="93">0</span><span class="stat-suffix">%</span>
+                <p>Placement Accuracy</p>
+            </div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                <span class="stat-number" data-target="45">0</span><span class="stat-suffix">+</span>
+                <p>Corporate Trainers</p>
+            </div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="150">
+                <span class="stat-number" data-target="15">0</span><span class="stat-suffix">+</span>
+                <p>Specialized Programs</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Testimonials Section -->
+    <section class="testimonials-section section-padding bg-light">
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up">
+                <span class="section-subtitle">Success Stories</span>
+                <h2>Endorsements From Our Accomplished Alumni</h2>
+            </div>
+            <div class="grid-3-col">
+                <div class="testimonial-card" data-aos="fade-up">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"The Web Development track at MK Coaching Centre was transformative. The hands-on lab deployments enabled me to secure a Full Stack role at a premier software company within weeks of graduation."</p>
+                    <div class="user-info">
+                        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&auto=format&fit=crop&q=80" alt="Rahul Verma">
+                        <div>
+                            <h4>Rahul Verma</h4>
+                            <p class="user-position">Software Engineer, Capgemini</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"The Data Science training matched global standards. The core instructors simplified complex statistical concepts and neural model programming perfectly. Highly recommended platform."</p>
+                    <div class="user-info">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80" alt="Priya Nair">
+                        <div>
+                            <h4>Priya Nair</h4>
+                            <p class="user-position">Data Analyst, IBM</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"MK Coaching completely demystified networking configurations and ethical hacking environments. Their dedicated system infrastructure and labs are elite class globally."</p>
+                    <div class="user-info">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&auto=format&fit=crop&q=80" alt="Amit Patel">
+                        <div>
+                            <h4>Amit Patel</h4>
+                            <p class="user-position">Security Consultant, Accenture</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section section-padding">
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up">
+                <span class="section-subtitle">Campus Life</span>
+                <h2>Inside MK Coaching Centre</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item" data-aos="zoom-in"><img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&auto=format&fit=crop&q=80" alt="Technical Workshop"><div class="overlay"><h4>Interactive Tech Seminars</h4></div></div>
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="50"><img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&auto=format&fit=crop&q=80" alt="Modern Systems Lab"><div class="overlay"><h4>Advanced Practical Systems Lab</h4></div></div>
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&auto=format&fit=crop&q=80" alt="Hackathon Event"><div class="overlay"><h4>Annual Internal Hackathon Challenges</h4></div></div>
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="150"><img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&auto=format&fit=crop&q=80" alt="Certification Ceremony"><div class="overlay"><h4>Official Graduation Ceremonies</h4></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section section-padding bg-light">
+        <div class="container unique-faq-layout">
+            <div class="section-header text-center" data-aos="fade-up">
+                <span class="section-subtitle">FAQ</span>
+                <h2>Frequently Answered Technical Enquiries</h2>
+            </div>
+            <div class="faq-accordion-wrapper" data-aos="fade-up">
+                <div class="accordion-item">
+                    <button class="accordion-header">What foundational prerequisites are required for the advanced tracks? <i class="fas fa-chevron-down"></i></button>
+                    <div class="accordion-body"><p>Absolutely none. Our advanced curricula include dedicated preparatory foundation modules, systematically building capabilities up from basic foundational operations before progressing into enterprise frameworks.</p></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Are international certification fees included within the regular standard program pricing? <i class="fas fa-chevron-down"></i></button>
+                    <div class="accordion-body"><p>Our educational pricing covers comprehensive access to all instruction, standard laboratory access, and institutional completion certificates. Global vendor certification fees (e.g., Oracle, Cisco) are processed separately based on the specific external exam requirements chosen by the candidate.</p></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">What operational framework defines the institute's placement guarantee? <i class="fas fa-chevron-down"></i></button>
+                    <div class="accordion-body"><p>We maintain an industry-verified placement pipeline, offering rigorous technical interview training and direct presentation pathways to active recruitment partners. Candidates fulfilling standard course completion milestones and maintaining 85% project scores receive uninterrupted recruitment interview support.</p></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Can courses be converted from physical labs to virtual online streams midway? <i class="fas fa-chevron-down"></i></button>
+                    <div class="accordion-body"><p>Yes, our flexible instructional models allow synchronized conversions between on-site dedicated laboratory setups and online hybrid tracks through simple formal coordination with your direct academic advisor.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section section-padding">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info-panel" data-aos="fade-right">
+                    <span class="badge">Get In Touch</span>
+                    <h2>Initiate Your Career Transformation Today</h2>
+                    <p>Have questions regarding advanced specializations, architectural curriculum modules, or alternative financing frameworks? Connect directly with our institutional onboarding specialists.</p>
+                    
+                    <div class="info-details">
+                        <div class="info-card">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Institutional Campus</h4>
+                                <p>MK Computer Centre Khambi, Haryana 121106, India</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <h4>Enrollment Hotline</h4>
+                                <p>+91 9671280171</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Official Communication</h4>
+                                <p>Mkcomputercentre@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-panel" data-aos="fade-left">
+                    <form id="admissionForm" class="premium-form">
+                        <div class="form-group">
+                            <label for="studentName">Legal Full Name</label>
+                            <input type="text" id="studentName" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="studentEmail">Secure Email Address</label>
+                            <input type="email" id="studentEmail" required placeholder="johndoe@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="studentPhone">Active Contact Number</label>
+                            <input type="tel" id="studentPhone" required placeholder="+91 98765 43210">
+                        </div>
+                        <div class="form-group">
+                            <label for="targetCourse">Target Technical Track</label>
+                            <select id="targetCourse" required>
+                                <option value="" disabled selected>Select specialized curriculum</option>
+                                <option value="MDCA">MDCA (18 Months)</option>
+                                <option value="ADCA">ADCA (12 Months)</option>
+                                <option value="DCA">DCA (6 Months)</option>
+                                <option value="Full Stack Web">Full Stack Web</option>
+                                <option value="Programming Languages">Programming Languages</option>
+                                <option value="Digital Marketing">Digital Marketing</option>
+                                <option value="Tally Prime, ERP-9 & GST">Tally Prime, ERP-9 & GST</option>
+                                <option value="AutoCAD">AutoCAD</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="userMessage">Additional Inquiries</label>
+                            <textarea id="userMessage" rows="4" placeholder="Detail any specific scheduling or career objectives..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Transmit Application Request <i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Google Maps Section -->
+    <section class="maps-section">
+        <div class="map-container">
+           <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3523.842999205822!2d77.4108749!3d27.968094099999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39733131e181b7f3%3A0xd841add2bb1485aa!2sHasanpur%20Bamnikhera%20Rd%2C%20Khambi%2C%20Haryana!5e0!3m2!1sen!2sin!4v1784028705522!5m2!1sen!2sin"
+            class="maps-iframe"
+            width="100%"
+            height="450"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            title="MK Computer Centre Location on Google Maps">
+          </iframe>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand-info">
+                <a href="#" class="logo footer-logo">
+                    <span class="logo-icon"><i class="fas fa-graduation-cap"></i></span>
+                    <span class="logo-text">MK <span class="accent-text">Computer Centre</span></span>
+                </a>
+                <p class="footer-desc">Setting precision global metrics across technical vocational platforms for over a decade. Cultivating advanced specialists ready to pioneer modern digital frontiers.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook Link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" aria-label="Twitter X Link"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links-col">
+                <h4>Core Specialties</h4>
+                <ul>
+                    <li><a href="#courses">Master Diplomas (MDCA/ADCA)</a></li>
+                    <li><a href="#courses">Full Stack Infrastructures</a></li>
+                    <li><a href="#courses">Enterprise Financial Accounting</a></li>
+                    <li><a href="#courses">Design Automation Engineering</a></li>
+                    <li><a href="#courses">Growth Digital Ecosystems</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links-col">
+                <h4>Institutional Links</h4>
+                <ul>
+                    <li><a href="#about">About Our Identity</a></li>
+                    <li><a href="#facilities">Campus Infrastructure</a></li>
+                    <li><a href="#placements">Corporate Placements</a></li>
+                    <li><a href="#contact">Admissions Office</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links-col">
+                <h4>Operational Window</h4>
+                <ul class="hours-list">
+                    <li><span>Monday - Friday:</span> 08:00 AM - 08:00 PM</li>
+                    <li><span>Saturday:</span> 09:00 AM - 06:00 PM</li>
+                    <li><span>Sunday:</span> Closed Training Slots</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom text-center">
+            <div class="container footer-bottom-flex">
+                <p>&copy; 2026 MK Computer Centre. All technical architecture rights reserved.</p>
+                <div class="footer-legal-links">
+                    <a href="#">Privacy Protocol</a>
+                    <a href="#">Instructional Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AOS Script & Main App JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
