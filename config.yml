@@ -1,0 +1,115 @@
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: false
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+publish_mode: editorial_workflow
+
+collections:
+
+  - name: "courses"
+    label: "Courses"
+
+    folder: "content/courses"
+
+    create: true
+
+    slug: "{{slug}}"
+
+    fields:
+      - label: "Course Name"
+        name: "title"
+        widget: "string"
+
+      - label: "Duration"
+        name: "duration"
+        widget: "string"
+
+      - label: "Fees"
+        name: "fees"
+        widget: "string"
+
+      - label: "Image"
+        name: "image"
+        widget: "image"
+
+      - label: "Description"
+        name: "body"
+        widget: "markdown"
+
+
+
+  - name: "faculty"
+    label: "Faculty"
+
+    folder: "content/faculty"
+
+    create: true
+
+    slug: "{{slug}}"
+
+    fields:
+
+      - label: "Faculty Name"
+        name: "name"
+        widget: "string"
+
+      - label: "Qualification"
+        name: "qualification"
+        widget: "string"
+
+      - label: "Photo"
+        name: "photo"
+        widget: "image"
+
+      - label: "Description"
+        name: "body"
+        widget: "markdown"
+
+
+
+  - name: "gallery"
+
+    label: "Gallery"
+
+    folder: "content/gallery"
+
+    create: true
+
+    fields:
+
+      - label: "Title"
+        name: "title"
+        widget: "string"
+
+      - label: "Image"
+        name: "image"
+        widget: "image"
+
+
+
+  - name: "notices"
+
+    label: "Notices"
+
+    folder: "content/notices"
+
+    create: true
+
+    fields:
+
+      - label: "Notice Title"
+        name: "title"
+        widget: "string"
+
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+
+      - label: "Description"
+        name: "body"
+        widget: "markdown"
