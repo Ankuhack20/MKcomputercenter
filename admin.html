@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MK Computer Center - Cloud Admin Panel</title>
+  
+  <!-- Modern Tech Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- CDN for QR Generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.15);
+      --primary-dark: #2563eb;
+      --bg: #0b0f19;
+      --card-bg: #111827;
+      --card-inner: #1f2937;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #374151;
+      --danger: #ef4444;
+      --success: #10b981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 30px 20px; min-height: 100vh; }
+    
+    .container { max-width: 1200px; margin: 0 auto; }
+    
+    .header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 20px 25px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    .header h1 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.025em; color: var(--text); }
+    .header h1 span { color: var(--primary); font-family: 'JetBrains Mono', monospace; font-size: 0.95em; }
+    .btn-logout { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+    .btn-logout:hover { background: var(--danger); color: white; border-color: var(--danger); }
+
+    .grid { display: grid; grid-template-columns: 360px 1fr; gap: 25px; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+    .card { background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border); height: fit-content; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+    .card h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 12px; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
+    .card h2 span.badge { background: var(--primary-glow); color: var(--primary); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 6px; }
+    .form-group input { width: 100%; padding: 10px 12px; background: var(--card-inner); border: 1px solid var(--border); color: white; border-radius: 6px; outline: none; font-size: 0.9rem; transition: border-color 0.2s; }
+    .form-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+    .form-group input[type="file"] { padding: 8px; font-size: 0.8rem; }
+    
+    .btn { background: var(--primary); color: white; border: none; padding: 11px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 5px; font-size: 0.9rem; transition: background 0.2s; }
+    .btn:hover { background: var(--primary-dark); }
+
+    /* Modern ID Card Display */
+    .student-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    
+    .student-card { background: var(--card-inner); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
+    
+    /* ID Card Header Branding */
+    .id-card-header { background: linear-gradient(135deg, #1e293b, #0f172a); border-bottom: 2px solid var(--primary); padding: 12px; text-align: center; }
+    .id-card-header h4 { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; letter-spacing: 1px; color: var(--primary); font-weight: 700; }
+    .id-card-header p { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1px; }
+
+    .id-card-body { padding: 15px; text-align: center; flex-grow: 1; }
+    .student-card img.avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin: 5px auto 12px auto; display: block; border: 3px solid var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+    .student-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+    
+    .info-row { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px; padding: 2px 4px; }
+    .info-row span.lbl { color: var(--text-muted); text-align: left; }
+    .info-row span.val { color: var(--text); font-weight: 500; text-align: right; }
+    
+    /* Date Branding Sub-Rows */
+    .date-row { font-size: 0.7rem; border-top: 1px dashed var(--border); margin-top: 8px; padding-top: 6px; color: var(--text-muted); text-align: left; display: flex; flex-direction: column; gap: 2px; }
+    
+    .qr-container { display: flex; justify-content: center; margin: 15px 0 5px 0; }
+    .qr-container div { border: 6px solid white; border-radius: 4px; }
+
+    .actions { display: flex; gap: 8px; justify-content: center; padding: 12px; background: rgba(0,0,0,0.2); border-top: 1px solid var(--border); }
+    .btn-edit { background: #eab308; color: #0f172a; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: 600; flex: 1; text-align: center; }
+    .btn-delete { background: var(--danger); color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: 600; flex: 1; text-align: center; }
+
+    .status-msg { text-align: center; color: var(--success); font-size: 0.85rem; font-weight: 600; margin-top: 12px; display: none; }
+
+    /* Professional Dark Modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(4, 6, 11, 0.85); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-box { background: var(--card-bg); padding: 35px 30px; border-radius: 16px; width: 360px; text-align: center; border: 1px solid var(--border); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+    .modal-box h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+    .modal-box p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
+    .modal-box input[type="password"] { background: var(--card-inner); border: 1px solid var(--border); color: white; width: 100%; padding: 12px; margin-bottom: 18px; border-radius: 6px; outline: none; text-align: center; font-size: 1.1rem; letter-spacing: 4px; }
+    .modal-box input[type="password"]::placeholder { letter-spacing: normal; font-size: 0.85rem; }
+    .modal-box input[type="password"]:focus { border-color: var(--primary); }
+  </style>
+</head>
+<body>
+
+  <!-- Access Protection Modal -->
+  <div id="auth-modal" class="modal-overlay">
+    <div class="modal-box">
+      <h2>Owner Login</h2>
+      <p>MK Computer Center Security Terminal</p>
+      <input type="password" id="passcode-input" placeholder="Enter Control PIN">
+      <button class="btn" onclick="authenticate()">Unlock Dashboard</button>
+    </div>
+  </div>
+
+  <div class="container" id="admin-content" style="display: none;">
+    <div class="header">
+      <h1>MK Computer Center — <span>Cloud.DB</span></h1>
+      <button class="btn-logout" onclick="lockPanel()">Lock Access</button>
+    </div>
+
+    <div class="grid">
+      <!-- Form Panel -->
+      <div class="card">
+        <h2 id="form-title">Add Student Profile</h2>
+        <form id="student-form" onsubmit="handleFormSubmit(event)">
+          <input type="hidden" id="student-id">
+          <!-- Hidden inputs to track creation dates between edit toggles -->
+          <input type="hidden" id="student-created-at">
+          
+          <div class="form-group">
+            <label>Student Full Name</label>
+            <input type="text" id="student-name" required placeholder="e.g. Rahul Sharma">
+          </div>
+
+          <div class="form-group">
+            <label>Course Name</label>
+            <input type="text" id="course-name" required placeholder="e.g. ADCA, DCA, Tally">
+          </div>
+
+          <div class="form-group">
+            <label>Course Duration</label>
+            <input type="text" id="course-duration" required placeholder="e.g. 6 Months, 1 Year">
+          </div>
+
+          <div class="form-group">
+            <label>Profile Image</label>
+            <input type="file" id="student-img-input" accept="image/*">
+            <input type="hidden" id="existing-img-data">
+          </div>
+
+          <button type="submit" class="btn" id="submit-btn">Save Profile & QR</button>
+          <button type="button" class="btn" style="background:#4b5563; display:none;" id="cancel-btn" onclick="resetForm()">Cancel Edit</button>
+          <div class="status-msg" id="status-msg">Saved to Cloud Successfully!</div>
+        </form>
+      </div>
+
+      <!-- Student Records Grid -->
+      <div class="card">
+        <h2>Registered System Database <span class="badge" id="count">0</span></h2>
+        <div class="student-list" id="student-list">Loading records...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // -------------------------------------------------------------
+    // REPLACE THIS WITH YOUR FIREBASE CONFIG FROM STEP 1
+    // -------------------------------------------------------------
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const DEFAULT_PIN = "1234";
+    let students = [];
+
+    function authenticate() {
+      const pin = document.getElementById('passcode-input').value;
+      if (pin === DEFAULT_PIN) {
+        document.getElementById('auth-modal').style.display = 'none';
+        document.getElementById('admin-content').style.display = 'block';
+        loadCloudStudents();
+      } else {
+        alert('Invalid Access PIN!');
+      }
+    }
+
+    function lockPanel() {
+      document.getElementById('auth-modal').style.display = 'flex';
+      document.getElementById('admin-content').style.display = 'none';
+      document.getElementById('passcode-input').value = '';
+    }
+
+    // Automatically resize/compress image so database never fills up
+    function compressImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e) => {
+          const img = new Image();
+          img.src = e.target.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const MAX_WIDTH = 300;
+            const scaleSize = MAX_WIDTH / img.width;
+            canvas.width = MAX_WIDTH;
+            canvas.height = img.height * scaleSize;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', 0.7)); 
+          };
+        };
+      });
+    }
+
+    // Fetch realtime student list from cloud database sorted by date
+    function loadCloudStudents() {
+      db.collection("students").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
+        students = [];
+        snapshot.forEach((doc) => {
+          students.push({ docId: doc.id, ...doc.data() });
+        });
+        renderStudents();
+      }, (error) => {
+        // Fallback catch if indices aren't configured yet in Firebase console
+        db.collection("students").onSnapshot((snapshot) => {
+          students = [];
+          snapshot.forEach((doc) => {
+            students.push({ docId: doc.id, ...doc.data() });
+          });
+          renderStudents();
+        });
+      });
+    }
+
+    // Add or Update Profile in Database with strict timestamp dates
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Saving to Cloud...';
+      
+      const docId = document.getElementById('student-id').value;
+      const name = document.getElementById('student-name').value;
+      const course = document.getElementById('course-name').value;
+      const duration = document.getElementById('course-duration').value;
+      const fileInput = document.getElementById('student-img-input');
+      const hiddenCreatedDate = document.getElementById('student-created-at').value;
+      let imageBase64 = document.getElementById('existing-img-data').value;
+
+      if (fileInput.files[0]) {
+        imageBase64 = await compressImage(fileInput.files[0]);
+      } else if (!imageBase64) {
+        imageBase64 = 'https://via.placeholder.com/150';
+      }
+
+      const currentDateStr = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+
+      const studentData = {
+        name,
+        course,
+        duration,
+        image: imageBase64,
+        updatedAt: currentDateStr
+      };
+
+      if (docId) {
+        // Keeps original creation date intact while saving edit changes
+        studentData.createdAt = hiddenCreatedDate || currentDateStr;
+        await db.collection("students").doc(docId).update(studentData);
+      } else {
+        // Brand new registration date logic
+        studentData.studentId = 'STU-' + Date.now().toString().slice(-6);
+        studentData.createdAt = currentDateStr;
+        await db.collection("students").add(studentData);
+      }
+
+      showStatusMsg();
+      resetForm();
+      submitBtn.disabled = false;
+    }
+
+    // Render Student ID Cards dynamically including Save Dates, Edit, and Delete options
+    function renderStudents() {
+      const listEl = document.getElementById('student-list');
+      document.getElementById('count').textContent = students.length;
+      listEl.innerHTML = '';
+
+      if (students.length === 0) {
+        listEl.innerHTML = '<p style="color:#64748b; grid-column: 1/-1; text-align:center;">No students added yet.</p>';
+        return;
+      }
+
+      students.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'student-card';
+        
+        // Show modification marker only if it differs from initial creation registry date
+        const isModified = s.updatedAt && s.updatedAt !== s.createdAt;
+        const modificationHtml = isModified ? `<div>• Mod: ${s.updatedAt}</div>` : '';
+
+        card.innerHTML = `
+          <div class="id-card-header">
+            <h4>MK COMPUTER CENTER</h4>
+            <p>Student Digital Identification</p>
+          </div>
+          <div class="id-card-body">
+            <img class="avatar" src="${s.image}" alt="${s.name}">
+            <h3>${s.name}</h3>
+            
+            <div class="info-row"><span class="lbl">Student ID</span><span class="val">${s.studentId}</span></div>
+            <div class="info-row"><span class="lbl">Course</span><span class="val">${s.course}</span></div>
+            <div class="info-row"><span class="lbl">Duration</span><span class="val">${s.duration}</span></div>
+            
+            <div class="date-row">
+              <div>• Reg: ${s.createdAt || 'N/A'}</div>
+              ${modificationHtml}
+            </div>
+
+            <div class="qr-container" id="qr-${s.docId}"></div>
+          </div>
+          <div class="actions">
+            <button class="btn-edit" onclick="editStudent('${s.docId}')">Edit</button>
+            <button class="btn-delete" onclick="deleteStudent('${s.docId}')">Delete</button>
+          </div>
+        `;
+        listEl.appendChild(card);
+
+        // Generate dynamic secure system verification QR Code
+        setTimeout(() => {
+          new QRCode(document.getElementById(`qr-${s.docId}`), {
+            text: `MK Computer Center | ID: ${s.studentId} | Name: ${s.name} | Course: ${s.course} | Reg Date: ${s.createdAt}`,
+            width: 80,
+            height: 80
+          });
+        }, 50);
+      });
+    }
+
+    // Edit Profile workflow logic
+    function editStudent(docId) {
+      const student = students.find(s => s.docId === docId);
+      if (!student) return;
+
+      document.getElementById('student-id').value = student.docId;
+      document.getElementById('student-name').value = student.name;
+      document.getElementById('course-name').value = student.course;
+      document.getElementById('course-duration').value = student.duration;
+      document.getElementById('existing-img-data').value = student.image;
+      document.getElementById('student-created-at').value = student.createdAt || '';
+
+      document.getElementById('form-title').textContent = 'Update Student Profile';
+      document.getElementById('submit-btn').textContent = 'Update Profile Changes';
+      document.getElementById('cancel-btn').style.display = 'block';
+      
+      // Auto smooth scroll back up to editing deck form pane on mobile screen sizes
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Delete Record workflow logic
+    async function deleteStudent(docId) {
+      if (confirm('Are you sure you want to permanently delete this student record?')) {
+        await db.collection("students").doc(docId).delete();
+      }
+    }
+
+    function resetForm() {
+      document.getElementById('student-form').reset();
+      document.getElementById('student-id').value = '';
+      document.getElementById('existing-img-data').value = '';
+      document.getElementById('student-created-at').value = '';
+      document.getElementById('form-title').textContent = 'Add Student Profile';
+      document.getElementById('submit-btn').textContent = 'Save Profile & QR';
+      document.getElementById('cancel-btn').style.display = 'none';
+    }
+
+    function showStatusMsg() {
+      const msg = document.getElementById('status-msg');
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 2500);
+    }
+  </script>
+</body>
+</html>
