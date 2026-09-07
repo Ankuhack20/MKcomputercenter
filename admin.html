@@ -160,23 +160,28 @@
       </div>
     </div>
   </div>
+<!-- Firebase Web SDK (v8 Compatible) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-  <script>
-    // -------------------------------------------------------------
-    // REPLACE THIS WITH YOUR FIREBASE CONFIG FROM STEP 1
-    // -------------------------------------------------------------
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+<script>
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyDbdJQaL86x5dAtGl0pdfv-J877IBfK_P8",
+    authDomain: "mkcomputercenter.firebaseapp.com",
+    projectId: "mkcomputercenter",
+    storageBucket: "mkcomputercenter.firebasestorage.app",
+    messagingSenderId: "821034749622",
+    appId: "1:821034749622:web:f0fb7bf4ac3a6087b9a017",
+    measurementId: "G-FMLS70G3Y6"
+  };
 
-    // Initialize Firebase
+  if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+  }
+  const db = firebase.firestore();
+
+  // YOUR EXISTING JavaScript FUNCTIONS CONTINUE BELOW (deleteStudent, resetForm, etc.)
 
     const DEFAULT_PIN = "1234";
     let students = [];
