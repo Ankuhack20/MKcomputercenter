@@ -200,6 +200,83 @@
             </div>
         </div>
     </section>
+    
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDbdJQaL86x5dAtGl0pdfv-J877IBfK_P8",
+      authDomain: "mkcomputercenter.firebaseapp.com",
+      projectId: "mkcomputercenter",
+      storageBucket: "mkcomputercenter.firebasestorage.app",
+      messagingSenderId: "821034749622",
+      appId: "1:821034749622:web:f0fb7bf4ac3a6087b9a017",
+      measurementId: "G-FMLS70G3Y6"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+
+    async function searchStudentProfile() {
+      const queryInput = document.getElementById('portal-search-query').value.trim();
+      const errorMsg = document.getElementById('portal-error-msg');
+      const resultCard = document.getElementById('portal-result-card');
+
+      errorMsg.style.display = 'none';
+      resultCard.innerHTML = '';
+
+      if (!queryInput) {
+        errorMsg.innerText = "Please enter a valid Student ID or Full Name.";
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      try {
+        let snapshot = await db.collection("students")
+          .where("studentId", "==", queryInput)
+          .get();
+
+        if (snapshot.empty) {
+          snapshot = await db.collection("students")
+            .where("name", "==", queryInput)
+            .get();
+        }
+
+        if (snapshot.empty) {
+          errorMsg.innerText = "No active record matches found in the cloud database.";
+          errorMsg.style.display = 'block';
+          return;
+        }
+
+        snapshot.forEach(doc => {
+          const student = doc.data();
+          resultCard.innerHTML = `
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 24px; max-width: 340px; margin: 20px auto 0; color: #fff; text-align: center;">
+              <h4 style="color: #3b82f6; margin: 0; font-size: 14px; letter-spacing: 1px;">MK COMPUTER CENTER</h4>
+              <p style="font-size: 10px; color: #94a3b8; margin-bottom: 16px;">STUDENT DIGITAL IDENTIFICATION</p>
+              
+              <img src="${student.photo || 'https://via.placeholder.com/100'}" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 2px solid #3b82f6; margin-bottom: 12px;" />
+              <h3 style="margin: 0 0 16px 0; font-size: 20px;">${student.name}</h3>
+              
+              <div style="text-align: left; background: #1e293b; padding: 12px; border-radius: 8px; font-size: 13px; line-height: 1.8;">
+                <div style="display: flex; justify-content: space-between;"><span style="color: #94a3b8;">Student ID</span><strong>${student.studentId}</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span style="color: #94a3b8;">Course</span><strong>${student.course}</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span style="color: #94a3b8;">Duration</span><strong>${student.duration}</strong></div>
+              </div>
+            </div>
+          `;
+        });
+
+      } catch (error) {
+        console.error("Firestore Portal Query Error: ", error);
+        errorMsg.innerText = "Database connection error. Please try again.";
+        errorMsg.style.display = 'block';
+      }
+    }
+  </script>
 
     <section id="courses" class="courses-section section-padding"> <!-- This is the start of your Courses section -->
     <!-- Why Choose Us -->
