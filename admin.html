@@ -11,9 +11,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
   <!-- QR Generator Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<!-- Web Camera QR Reader Library -->
-<script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- Web Camera QR Reader Library -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <!-- HTML2Canvas Library for downloading ID Cards -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -48,7 +50,7 @@
     .grid { display: grid; grid-template-columns: 360px 1fr; gap: 25px; }
     @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
 
-    .card { background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border); height: fit-content; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+    .card { background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border); height: fit-content; box-shadow: 0 4px 20px rgba(0,0,0,0.2); margin-bottom: 25px; }
     .card h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 12px; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
     .card h2 span.badge { background: var(--primary-glow); color: var(--primary); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
 
@@ -60,13 +62,15 @@
     
     .btn { background: var(--primary); color: white; border: none; padding: 11px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 5px; font-size: 0.9rem; transition: background 0.2s; }
     .btn:hover { background: var(--primary-dark); }
+    .scan-btn { background: #10b981; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; font-size: 0.9rem; transition: background 0.2s; }
+    .scan-btn:hover { background: #059669; }
 
-    /* Modern ID Card Display */
-    .student-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    /* Student List & Cards */
+    .student-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .student-card { background: var(--card-inner); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; flex-direction: column; transition: outline 0.3s; }
     
-    .student-card { background: var(--card-inner); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
-    
-    /* ID Card Header Branding */
+    .id-card-wrapper { background: var(--card-inner); border-radius: 12px; overflow: hidden; }
+
     .id-card-header { background: linear-gradient(135deg, #1e293b, #0f172a); border-bottom: 2px solid var(--primary); padding: 12px; text-align: center; }
     .id-card-header h4 { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; letter-spacing: 1px; color: var(--primary); font-weight: 700; }
     .id-card-header p { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1px; }
@@ -79,19 +83,19 @@
     .info-row span.lbl { color: var(--text-muted); text-align: left; }
     .info-row span.val { color: var(--text); font-weight: 500; text-align: right; }
     
-    /* Date Branding Sub-Rows */
     .date-row { font-size: 0.7rem; border-top: 1px dashed var(--border); margin-top: 8px; padding-top: 6px; color: var(--text-muted); text-align: left; display: flex; flex-direction: column; gap: 2px; }
     
     .qr-container { display: flex; justify-content: center; margin: 15px 0 5px 0; }
     .qr-container div { border: 6px solid white; border-radius: 4px; }
 
-    .actions { display: flex; gap: 8px; justify-content: center; padding: 12px; background: rgba(0,0,0,0.2); border-top: 1px solid var(--border); }
-    .btn-edit { background: #eab308; color: #0f172a; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: 600; flex: 1; text-align: center; }
-    .btn-delete { background: var(--danger); color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: 600; flex: 1; text-align: center; }
+    .actions { display: flex; gap: 6px; justify-content: center; padding: 12px; background: rgba(0,0,0,0.2); border-top: 1px solid var(--border); flex-wrap: wrap; }
+    .btn-edit { background: #eab308; color: #0f172a; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: 600; flex: 1; text-align: center; }
+    .btn-download { background: #06b6d4; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: 600; flex: 1; text-align: center; }
+    .btn-delete { background: var(--danger); color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: 600; flex: 1; text-align: center; }
 
     .status-msg { text-align: center; color: var(--success); font-size: 0.85rem; font-weight: 600; margin-top: 12px; display: none; }
 
-    /* Professional Dark Modal */
+    /* Modal Styling */
     .modal-overlay { position: fixed; inset: 0; background: rgba(4, 6, 11, 0.85); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1000; }
     .modal-box { background: var(--card-bg); padding: 35px 30px; border-radius: 16px; width: 360px; text-align: center; border: 1px solid var(--border); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
     .modal-box h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; color: var(--text); }
@@ -120,39 +124,59 @@
     </div>
 
     <div class="grid">
-      <!-- Form Panel -->
-      <div class="card">
-        <h2 id="form-title">Add Student Profile</h2>
-        <form id="student-form" onsubmit="handleFormSubmit(event)">
-          <input type="hidden" id="student-id">
-          <!-- Hidden inputs to track creation dates between edit toggles -->
-          <input type="hidden" id="student-created-at">
-          
-          <div class="form-group">
-            <label>Student Full Name</label>
-            <input type="text" id="student-name" required placeholder="e.g. Rahul Sharma">
-          </div>
+      <!-- Form & Scanner Left Panel -->
+      <div>
+        <div class="card">
+          <h2 id="form-title">Add Student Profile</h2>
+          <form id="student-form" onsubmit="handleFormSubmit(event)">
+            <input type="hidden" id="student-id">
+            <input type="hidden" id="student-created-at">
+            
+            <div class="form-group">
+              <label>Student Full Name</label>
+              <input type="text" id="student-name" required placeholder="e.g. Rahul Sharma">
+            </div>
 
-          <div class="form-group">
-            <label>Course Name</label>
-            <input type="text" id="course-name" required placeholder="e.g. ADCA, DCA, Tally">
-          </div>
+            <div class="form-group">
+              <label>Father's Name</label>
+              <input type="text" id="father-name" required placeholder="e.g. Suresh Sharma">
+            </div>
 
-          <div class="form-group">
-            <label>Course Duration</label>
-            <input type="text" id="course-duration" required placeholder="e.g. 6 Months, 1 Year">
-          </div>
+            <div class="form-group">
+              <label>Date of Birth (DOB)</label>
+              <input type="date" id="dob" required>
+            </div>
 
-          <div class="form-group">
-            <label>Profile Image</label>
-            <input type="file" id="student-img-input" accept="image/*">
-            <input type="hidden" id="existing-img-data">
-          </div>
+            <div class="form-group">
+              <label>Course Name</label>
+              <input type="text" id="course-name" required placeholder="e.g. ADCA, DCA, Tally">
+            </div>
 
-          <button type="submit" class="btn" id="submit-btn">Save Profile & QR</button>
-          <button type="button" class="btn" style="background:#4b5563; display:none;" id="cancel-btn" onclick="resetForm()">Cancel Edit</button>
-          <div class="status-msg" id="status-msg">Saved to Cloud Successfully!</div>
-        </form>
+            <div class="form-group">
+              <label>Course Duration</label>
+              <input type="text" id="course-duration" required placeholder="e.g. 6 Months, 1 Year">
+            </div>
+
+            <div class="form-group">
+              <label>Profile Image</label>
+              <input type="file" id="student-img-input" accept="image/*">
+              <input type="hidden" id="existing-img-data">
+            </div>
+
+            <button type="submit" class="btn" id="submit-btn">Save Profile & QR</button>
+            <button type="button" class="btn" style="background:#4b5563; display:none;" id="cancel-btn" onclick="resetForm()">Cancel Edit</button>
+            <div class="status-msg" id="status-msg">Saved to Cloud Successfully!</div>
+          </form>
+        </div>
+
+        <!-- Camera Scanner Card -->
+        <div class="card">
+          <h2>QR ID Scanner</h2>
+          <div class="scanner-container">
+            <button type="button" onclick="toggleScanner()" class="scan-btn">Scan Student ID QR</button>
+            <div id="qr-reader" style="width: 100%; display: none; margin-top: 15px;"></div>
+          </div>
+        </div>
       </div>
 
       <!-- Student Records Grid -->
@@ -162,48 +186,26 @@
       </div>
     </div>
   </div>
-<!-- Firebase Web SDK (v8 Compatible) -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-<script>
+  <!-- Firebase Web SDK (v8 Compatible) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-  function generateStudentCardQR(studentId, name, course, duration) {
-  // Store student profile JSON payload directly inside the QR code
-  const studentPayload = JSON.stringify({
-    id: studentId,
-    name: name,
-    course: course,
-    duration: duration
-  });
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDbdJQaL86x5dAtGl0pdfv-J877IBfK_P8",
+      authDomain: "mkcomputercenter.firebaseapp.com",
+      projectId: "mkcomputercenter",
+      storageBucket: "mkcomputercenter.firebasestorage.app",
+      messagingSenderId: "821034749622",
+      appId: "1:821034749622:web:f0fb7bf4ac3a6087b9a017",
+      measurementId: "G-FMLS70G3Y6"
+    };
 
-  const qrContainer = document.getElementById(`qr-${studentId}`);
-  qrContainer.innerHTML = ""; // Clear existing QR
-
-  new QRCode(qrContainer, {
-    text: studentPayload,
-    width: 100,
-    height: 100,
-    colorDark: "#000000",
-    colorLight: "#ffffff"
-  });
-}
-  const firebaseConfig = {
-    apiKey: "AIzaSyDbdJQaL86x5dAtGl0pdfv-J877IBfK_P8",
-    authDomain: "mkcomputercenter.firebaseapp.com",
-    projectId: "mkcomputercenter",
-    storageBucket: "mkcomputercenter.firebasestorage.app",
-    messagingSenderId: "821034749622",
-    appId: "1:821034749622:web:f0fb7bf4ac3a6087b9a017",
-    measurementId: "G-FMLS70G3Y6"
-  };
-
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
-  const db = firebase.firestore();
-
-  // YOUR EXISTING JavaScript FUNCTIONS CONTINUE BELOW (deleteStudent, resetForm, etc.)
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
 
     const DEFAULT_PIN = "1234";
     let students = [];
@@ -225,7 +227,6 @@
       document.getElementById('passcode-input').value = '';
     }
 
-    // Automatically resize/compress image so database never fills up
     function compressImage(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -248,7 +249,6 @@
       });
     }
 
-    // Fetch realtime student list from cloud database sorted by date
     function loadCloudStudents() {
       db.collection("students").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
         students = [];
@@ -257,7 +257,6 @@
         });
         renderStudents();
       }, (error) => {
-        // Fallback catch if indices aren't configured yet in Firebase console
         db.collection("students").onSnapshot((snapshot) => {
           students = [];
           snapshot.forEach((doc) => {
@@ -268,7 +267,6 @@
       });
     }
 
-    // Add or Update Profile in Database with strict timestamp dates
     async function handleFormSubmit(e) {
       e.preventDefault();
       const submitBtn = document.getElementById('submit-btn');
@@ -277,6 +275,8 @@
       
       const docId = document.getElementById('student-id').value;
       const name = document.getElementById('student-name').value;
+      const fatherName = document.getElementById('father-name').value;
+      const dob = document.getElementById('dob').value;
       const course = document.getElementById('course-name').value;
       const duration = document.getElementById('course-duration').value;
       const fileInput = document.getElementById('student-img-input');
@@ -297,6 +297,8 @@
 
       const studentData = {
         name,
+        fatherName,
+        dob,
         course,
         duration,
         image: imageBase64,
@@ -304,11 +306,9 @@
       };
 
       if (docId) {
-        // Keeps original creation date intact while saving edit changes
         studentData.createdAt = hiddenCreatedDate || currentDateStr;
         await db.collection("students").doc(docId).update(studentData);
       } else {
-        // Brand new registration date logic
         studentData.studentId = 'STU-' + Date.now().toString().slice(-6);
         studentData.createdAt = currentDateStr;
         await db.collection("students").add(studentData);
@@ -319,7 +319,29 @@
       submitBtn.disabled = false;
     }
 
-    // Render Student ID Cards dynamically including Save Dates, Edit, and Delete options
+    function generateStudentCardQR(docId, studentId, name, fatherName, dob, course, duration) {
+      const studentPayload = JSON.stringify({
+        id: studentId,
+        name: name,
+        fatherName: fatherName,
+        dob: dob,
+        course: course,
+        duration: duration
+      });
+
+      const qrContainer = document.getElementById(`qr-${docId}`);
+      if (qrContainer) {
+        qrContainer.innerHTML = "";
+        new QRCode(qrContainer, {
+          text: studentPayload,
+          width: 100,
+          height: 100,
+          colorDark: "#000000",
+          colorLight: "#ffffff"
+        });
+      }
+    }
+
     function renderStudents() {
       const listEl = document.getElementById('student-list');
       document.getElementById('count').textContent = students.length;
@@ -333,96 +355,113 @@
       students.forEach(s => {
         const card = document.createElement('div');
         card.className = 'student-card';
+        card.id = `card-${s.studentId}`;
         
-        // Show modification marker only if it differs from initial creation registry date
         const isModified = s.updatedAt && s.updatedAt !== s.createdAt;
         const modificationHtml = isModified ? `<div>• Mod: ${s.updatedAt}</div>` : '';
 
         card.innerHTML = `
-          <div class="id-card-header">
-            <h4>MK COMPUTER CENTER</h4>
-            <p>Student Digital Identification</p>
-          </div>
-          <div class="id-card-body">
-            <img class="avatar" src="${s.image}" alt="${s.name}">
-            <h3>${s.name}</h3>
-            
-            <div class="info-row"><span class="lbl">Student ID</span><span class="val">${s.studentId}</span></div>
-            <div class="info-row"><span class="lbl">Course</span><span class="val">${s.course}</span></div>
-            <div class="info-row"><span class="lbl">Duration</span><span class="val">${s.duration}</span></div>
-            
-            <div class="date-row">
-              <div>• Reg: ${s.createdAt || 'N/A'}</div>
-              ${modificationHtml}
+          <div class="id-card-wrapper" id="id-card-${s.docId}">
+            <div class="id-card-header">
+              <h4>MK COMPUTER CENTER</h4>
+              <p>Student Digital Identification</p>
             </div>
+            <div class="id-card-body">
+              <img class="avatar" src="${s.image}" alt="${s.name}">
+              <h3>${s.name}</h3>
+              
+              <div class="info-row"><span class="lbl">Student ID</span><span class="val">${s.studentId}</span></div>
+              <div class="info-row"><span class="lbl">Father's Name</span><span class="val">${s.fatherName || 'N/A'}</span></div>
+              <div class="info-row"><span class="lbl">DOB</span><span class="val">${s.dob || 'N/A'}</span></div>
+              <div class="info-row"><span class="lbl">Course</span><span class="val">${s.course}</span></div>
+              <div class="info-row"><span class="lbl">Duration</span><span class="val">${s.duration}</span></div>
+              
+              <div class="date-row">
+                <div>• Reg: ${s.createdAt || 'N/A'}</div>
+                ${modificationHtml}
+              </div>
 
-            <div class="qr-container" id="qr-${s.docId}"></div>
+              <div class="qr-container" id="qr-${s.docId}"></div>
+            </div>
           </div>
           <div class="actions">
             <button class="btn-edit" onclick="editStudent('${s.docId}')">Edit</button>
+            <button class="btn-download" onclick="downloadIDCard('${s.docId}', '${s.name}')">Download ID</button>
             <button class="btn-delete" onclick="deleteStudent('${s.docId}')">Delete</button>
           </div>
         `;
         listEl.appendChild(card);
-
-        // Generate dynamic secure system verification QR Code
-       <div class="scanner-container" style="margin: 15px 0;">
-  <button type="button" onclick="toggleScanner()" class="scan-btn">Scan Student ID QR</button>
-  <div id="qr-reader" style="width: 300px; display: none; margin-top: 10px;"></div>
-</div>
-
-      let html5QrCodeScanner = null;
-
-function toggleScanner() {
-  const readerDiv = document.getElementById("qr-reader");
-  
-  if (readerDiv.style.display === "none") {
-    readerDiv.style.display = "block";
-    html5QrCodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
-    html5QrCodeScanner.render(onScanSuccess, onScanError);
-  } else {
-    stopScanner();
-  }
-}
-
-function stopScanner() {
-  if (html5QrCodeScanner) {
-    html5QrCodeScanner.clear();
-    document.getElementById("qr-reader").style.display = "none";
-  }
-}
-
-function onScanSuccess(decodedText) {
-  try {
-    // Parse scanned JSON string back into an object
-    const student = JSON.parse(decodedText);
-
-    // Alert or display student details directly
-    alert(`STUDENT FOUND\n-------------------\nName: ${student.name}\nID: ${student.id}\nCourse: ${student.course}\nDuration: ${student.duration}`);
-
-    // If card exists in the registered database list, highlight it
-    const cardElement = document.getElementById(`card-${student.id}`);
-    if (cardElement) {
-      cardElement.scrollIntoView({ behavior: "smooth" });
-      cardElement.style.outline = "2px solid #0055ff";
+        generateStudentCardQR(s.docId, s.studentId, s.name, s.fatherName, s.dob, s.course, s.duration);
+      });
     }
 
-    stopScanner();
-  } catch (e) {
-    console.error("Invalid QR structure or plain text format:", decodedText);
-  }
-}
+    function downloadIDCard(docId, studentName) {
+      const cardElement = document.getElementById(`id-card-${docId}`);
+      if (!cardElement) return;
 
-function onScanError(errorMessage) {
-  // Scan attempts in progress
-}
-    // Edit Profile workflow logic
+      html2canvas(cardElement, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#1f2937"
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `${studentName.replace(/\s+/g, '_')}_ID_Card.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+
+    let html5QrCodeScanner = null;
+
+    function toggleScanner() {
+      const readerDiv = document.getElementById("qr-reader");
+      if (!readerDiv) return;
+      
+      if (readerDiv.style.display === "none") {
+        readerDiv.style.display = "block";
+        html5QrCodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
+        html5QrCodeScanner.render(onScanSuccess, onScanError);
+      } else {
+        stopScanner();
+      }
+    }
+
+    function stopScanner() {
+      if (html5QrCodeScanner) {
+        html5QrCodeScanner.clear();
+        const readerDiv = document.getElementById("qr-reader");
+        if (readerDiv) readerDiv.style.display = "none";
+      }
+    }
+
+    function onScanSuccess(decodedText) {
+      try {
+        const student = JSON.parse(decodedText);
+        alert(`STUDENT FOUND\n-------------------\nName: ${student.name}\nFather's Name: ${student.fatherName || 'N/A'}\nDOB: ${student.dob || 'N/A'}\nID: ${student.id}\nCourse: ${student.course}\nDuration: ${student.duration}`);
+
+        const cardElement = document.getElementById(`card-${student.id}`);
+        if (cardElement) {
+          cardElement.scrollIntoView({ behavior: "smooth" });
+          cardElement.style.outline = "2px solid #0055ff";
+        }
+        stopScanner();
+      } catch (e) {
+        console.error("Invalid QR structure or plain text format:", decodedText);
+      }
+    }
+
+    function onScanError(errorMessage) {
+      // Scanning in progress
+    }
+
     function editStudent(docId) {
       const student = students.find(s => s.docId === docId);
       if (!student) return;
 
       document.getElementById('student-id').value = student.docId;
       document.getElementById('student-name').value = student.name;
+      document.getElementById('father-name').value = student.fatherName || '';
+      document.getElementById('dob').value = student.dob || '';
       document.getElementById('course-name').value = student.course;
       document.getElementById('course-duration').value = student.duration;
       document.getElementById('existing-img-data').value = student.image;
@@ -432,11 +471,9 @@ function onScanError(errorMessage) {
       document.getElementById('submit-btn').textContent = 'Update Profile Changes';
       document.getElementById('cancel-btn').style.display = 'block';
       
-      // Auto smooth scroll back up to editing deck form pane on mobile screen sizes
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Delete Record workflow logic
     async function deleteStudent(docId) {
       if (confirm('Are you sure you want to permanently delete this student record?')) {
         await db.collection("students").doc(docId).delete();
