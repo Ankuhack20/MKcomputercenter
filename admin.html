@@ -10,8 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
-  <!-- CDN for QR Generation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- QR Generator Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<!-- Web Camera QR Reader Library -->
+<script src="https://unpkg.com/html5-qrcode"></script>
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -165,7 +167,27 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
-  
+
+  function generateStudentCardQR(studentId, name, course, duration) {
+  // Store student profile JSON payload directly inside the QR code
+  const studentPayload = JSON.stringify({
+    id: studentId,
+    name: name,
+    course: course,
+    duration: duration
+  });
+
+  const qrContainer = document.getElementById(`qr-${studentId}`);
+  qrContainer.innerHTML = ""; // Clear existing QR
+
+  new QRCode(qrContainer, {
+    text: studentPayload,
+    width: 100,
+    height: 100,
+    colorDark: "#000000",
+    colorLight: "#ffffff"
+  });
+}
   const firebaseConfig = {
     apiKey: "AIzaSyDbdJQaL86x5dAtGl0pdfv-J877IBfK_P8",
     authDomain: "mkcomputercenter.firebaseapp.com",
@@ -344,16 +366,56 @@
         listEl.appendChild(card);
 
         // Generate dynamic secure system verification QR Code
-        setTimeout(() => {
-          new QRCode(document.getElementById(`qr-${s.docId}`), {
-            text: `MK Computer Center | ID: ${s.studentId} | Name: ${s.name} | Course: ${s.course} | Reg Date: ${s.createdAt}`,
-            width: 80,
-            height: 80
-          });
-        }, 50);
-      });
+       <div class="scanner-container" style="margin: 15px 0;">
+  <button type="button" onclick="toggleScanner()" class="scan-btn">Scan Student ID QR</button>
+  <div id="qr-reader" style="width: 300px; display: none; margin-top: 10px;"></div>
+</div>
+
+      let html5QrCodeScanner = null;
+
+function toggleScanner() {
+  const readerDiv = document.getElementById("qr-reader");
+  
+  if (readerDiv.style.display === "none") {
+    readerDiv.style.display = "block";
+    html5QrCodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
+    html5QrCodeScanner.render(onScanSuccess, onScanError);
+  } else {
+    stopScanner();
+  }
+}
+
+function stopScanner() {
+  if (html5QrCodeScanner) {
+    html5QrCodeScanner.clear();
+    document.getElementById("qr-reader").style.display = "none";
+  }
+}
+
+function onScanSuccess(decodedText) {
+  try {
+    // Parse scanned JSON string back into an object
+    const student = JSON.parse(decodedText);
+
+    // Alert or display student details directly
+    alert(`STUDENT FOUND\n-------------------\nName: ${student.name}\nID: ${student.id}\nCourse: ${student.course}\nDuration: ${student.duration}`);
+
+    // If card exists in the registered database list, highlight it
+    const cardElement = document.getElementById(`card-${student.id}`);
+    if (cardElement) {
+      cardElement.scrollIntoView({ behavior: "smooth" });
+      cardElement.style.outline = "2px solid #0055ff";
     }
 
+    stopScanner();
+  } catch (e) {
+    console.error("Invalid QR structure or plain text format:", decodedText);
+  }
+}
+
+function onScanError(errorMessage) {
+  // Scan attempts in progress
+}
     // Edit Profile workflow logic
     function editStudent(docId) {
       const student = students.find(s => s.docId === docId);
