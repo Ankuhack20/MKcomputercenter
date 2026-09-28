@@ -204,90 +204,104 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyDbdJQaL86x5dAtGl0pdfv-J877IBfK_P8",
-      authDomain: "mkcomputercenter.firebaseapp.com",
-      projectId: "mkcomputercenter",
-      storageBucket: "mkcomputercenter.firebasestorage.app",
-      messagingSenderId: "821034749622",
-      appId: "1:821034749622:web:f0fb7bf4ac3a6087b9a017",
-      measurementId: "G-FMLS70G3Y6"
-    };
+ <script>
+  // 1. Firebase Credentials
+  const firebaseConfig = {
+    apiKey: "AIzaSyDbdJQaL86x5dAtGl0pdfv-J877IBfK_P8",
+    authDomain: "mkcomputercenter.firebaseapp.com",
+    projectId: "mkcomputercenter",
+    storageBucket: "mkcomputercenter.firebasestorage.app",
+    messagingSenderId: "821034749622",
+    appId: "1:821034749622:web:f0fb7bf4ac3a6087b9a017",
+    measurementId: "G-FMLS70G3Y6"
+  };
 
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-    const db = firebase.firestore();
-
-    async function searchStudentProfile() {
-  const queryInput = document.getElementById('portal-search-query').value.trim();
-  const errorMsg = document.getElementById('portal-error-msg');
-  const resultCard = document.getElementById('portal-result-card');
-
-  // Reset display
-  errorMsg.style.display = 'none';
-  resultCard.innerHTML = '';
-  resultCard.style.display = 'none';
-
-  if (!queryInput) {
-    errorMsg.innerText = "Please enter a valid Student ID or Full Name.";
-    errorMsg.style.display = 'block';
-    return;
+  // Initialize Firebase
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
   }
+  const db = firebase.firestore();
 
-  try {
-    const studentsRef = db.collection("students");
+  // 2. Updated Search Function (Handles all field names from Admin Panel)
+  async function searchStudentProfile() {
+    const queryInput = document.getElementById('portal-search-query').value.trim();
+    const errorMsg = document.getElementById('portal-error-msg');
+    const resultCard = document.getElementById('portal-result-card');
 
-    // 1. Search by Student ID (e.g., STU-508621)
-    let snapshot = await studentsRef.where("studentId", "==", queryInput).get();
+    // Reset UI
+    errorMsg.style.display = 'none';
+    resultCard.innerHTML = '';
+    resultCard.style.display = 'none';
 
-    // 2. Search by Full Name (Fixed from "name" to "fullName")
-    if (snapshot.empty) {
-      snapshot = await studentsRef.where("fullName", "==", queryInput).get();
-    }
-
-    if (snapshot.empty) {
-      errorMsg.innerText = "No active record matches found in the cloud database.";
+    if (!queryInput) {
+      errorMsg.innerText = "Please enter a valid Student ID or Full Name.";
       errorMsg.style.display = 'block';
       return;
     }
 
-    // 3. Extract data from Firestore document
-    const student = snapshot.docs[0].data();
+    try {
+      const studentsRef = db.collection("students");
 
-    // 4. Build and display the ID Card
-    resultCard.innerHTML = `
-      <div style="border: 1px solid #30363d; border-radius: 12px; padding: 20px; background-color: #161b22; max-width: 360px; margin: 20px auto; text-align: center; color: #fff;">
-        <h4 style="margin:0; color:#3b82f6; font-size:15px; font-weight:bold;">MK COMPUTER CENTER</h4>
-        <span style="font-size:9px; letter-spacing:1px; color:#8b949e; display:block; margin-bottom:15px;">STUDENT DIGITAL IDENTIFICATION</span>
-        
-        ${student.profileImageUrl ? `<img src="${student.profileImageUrl}" alt="Student Photo" style="width:85px; height:85px; border-radius:50%; object-fit:cover; border:2px solid #3b82f6; margin-bottom:8px;">` : ''}
-        <h3 style="font-size:18px; font-weight:600; margin-bottom:15px;">${student.fullName || 'N/A'}</h3>
+      // Search by Student ID
+      let snapshot = await studentsRef.where("studentId", "==", queryInput).get();
 
-        <div style="text-align:left; font-size:13px; line-height:1.8; border-top:1px dashed #30363d; padding-top:12px; margin-bottom:15px;">
-          <p style="margin: 4px 0;"><span>Student ID:</span> <strong style="float:right;">${student.studentId || 'N/A'}</strong></p>
-          <p style="margin: 4px 0;"><span>Course:</span> <strong style="float:right;">${student.course || 'N/A'}</strong></p>
-          <p style="margin: 4px 0;"><span>Duration:</span> <strong style="float:right;">${student.duration || 'N/A'}</strong></p>
-          <p style="margin: 4px 0;"><span>Reg. Date:</span> <strong style="float:right;">${student.registrationDate || 'N/A'}</strong></p>
+      // Search by Full Name (checks both studentFullName and fullName)
+      if (snapshot.empty) {
+        snapshot = await studentsRef.where("studentFullName", "==", queryInput).get();
+      }
+      if (snapshot.empty) {
+        snapshot = await studentsRef.where("fullName", "==", queryInput).get();
+      }
+
+      if (snapshot.empty) {
+        errorMsg.innerText = "No active record matches found in the cloud database.";
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      // Extract document data
+      const student = snapshot.docs[0].data();
+
+      // Fallback matching for admin panel field names
+      const name = student.studentFullName || student.fullName || 'N/A';
+      const id = student.studentId || 'N/A';
+      const course = student.courseName || student.course || 'N/A';
+      const duration = student.courseDuration || student.duration || 'N/A';
+      const regDate = student.registrationDate || student.regDate || student.createdAt || 'N/A';
+      const photo = student.profileImage || student.profileImageUrl || student.photo || student.imageUrl || '';
+      const qr = student.qrCode || student.qrCodeUrl || student.qr || '';
+
+      // Render exact ID Card UI
+      resultCard.innerHTML = `
+        <div style="border: 1px solid #30363d; border-radius: 12px; padding: 20px; background-color: #161b22; max-width: 360px; margin: 20px auto; text-align: center; color: #fff;">
+          <h4 style="margin:0; color:#3b82f6; font-size:15px; font-weight:bold;">MK COMPUTER CENTER</h4>
+          <span style="font-size:9px; letter-spacing:1px; color:#8b949e; display:block; margin-bottom:15px;">STUDENT DIGITAL IDENTIFICATION</span>
+          
+          ${photo ? `<img src="${photo}" alt="Student Photo" style="width:85px; height:85px; border-radius:50%; object-fit:cover; border:2px solid #3b82f6; margin-bottom:8px;">` : ''}
+          <h3 style="font-size:18px; font-weight:600; margin-bottom:15px; color:#ffffff;">${name}</h3>
+
+          <div style="text-align:left; font-size:13px; line-height:1.8; border-top:1px dashed #30363d; padding-top:12px; margin-bottom:15px;">
+            <p style="margin: 4px 0;"><span>Student ID:</span> <strong style="float:right;">${id}</strong></p>
+            <p style="margin: 4px 0;"><span>Course:</span> <strong style="float:right;">${course}</strong></p>
+            <p style="margin: 4px 0;"><span>Duration:</span> <strong style="float:right;">${duration}</strong></p>
+            <p style="margin: 4px 0;"><span>Reg. Date:</span> <strong style="float:right;">${regDate}</strong></p>
+          </div>
+
+          ${qr ? `<img src="${qr}" alt="QR Code" style="width:100px; height:100px; margin-bottom:12px;"><br>` : ''}
+          
+          <button onclick="window.print()" style="width:100%; padding:10px; background-color:#0891b2; color:#fff; border:none; border-radius:6px; font-weight:600; cursor:pointer; margin-top:10px;">Download / Print ID</button>
         </div>
+      `;
 
-        ${student.qrCodeUrl ? `<img src="${student.qrCodeUrl}" alt="QR Code" style="width:100px; height:100px; margin-bottom:12px;"><br>` : ''}
-        
-        <button onclick="window.print()" style="width:100%; padding:10px; background-color:#0891b2; color:#fff; border:none; border-radius:6px; font-weight:600; cursor:pointer; margin-top:10px;">Download / Print ID</button>
-      </div>
-    `;
+      resultCard.style.display = 'block';
 
-    resultCard.style.display = 'block';
-
-  } catch (error) {
-    console.error("Firestore error:", error);
-    errorMsg.innerText = "Error fetching data: " + error.message;
-    errorMsg.style.display = 'block';
+    } catch (error) {
+      console.error("Firestore error:", error);
+      errorMsg.innerText = "Error fetching data: " + error.message;
+      errorMsg.style.display = 'block';
+    }
   }
-}
 </script>
-
     <section id="courses" class="courses-section section-padding"> <!-- This is the start of your Courses section -->
     <!-- Why Choose Us -->
     <section class="why-choose-section section-padding bg-light">
