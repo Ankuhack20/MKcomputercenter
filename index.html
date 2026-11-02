@@ -249,6 +249,9 @@
       if (snapshot.empty) {
         snapshot = await studentsRef.where("studentFullName", "==", queryInput).get();
       }
+        if (snapshot.empty) {
+           snapshot = await studentsRef.where("name", "==", queryInput).get();
+        }
       if (snapshot.empty) {
         snapshot = await studentsRef.where("fullName", "==", queryInput).get();
       }
@@ -263,12 +266,12 @@
       const student = snapshot.docs[0].data();
 
       // Fallback matching for admin panel field names
-      const name = student.studentFullName || student.fullName || 'N/A';
+      const name = student.name || student.studentFullName || student.fullName || 'N/A';
       const id = student.studentId || 'N/A';
       const course = student.courseName || student.course || 'N/A';
       const duration = student.courseDuration || student.duration || 'N/A';
       const regDate = student.registrationDate || student.regDate || student.createdAt || 'N/A';
-      const photo = student.profileImage || student.profileImageUrl || student.photo || student.imageUrl || '';
+      const photo = student.image || student.profileImage || student.profileImageUrl || student.photo || student.imageUrl || '';
       const qr = student.qrCode || student.qrCodeUrl || student.qr || '';
 
       // Render exact ID Card UI
