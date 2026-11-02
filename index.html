@@ -264,6 +264,11 @@
 
       // Extract document data
       const student = snapshot.docs[0].data();
+      console.log("STUDENT DATA:", Object.keys(student));
+      console.log("Student Name:", student.name);
+      console.log("Student Image Exists:", !!student.image);
+      console.log("Image Preview:", String(student.image || "").substring(0, 50));
+      console.log("Complete Student Record:", student);
 
       // Fallback matching for admin panel field names
       const name = student.name || student.studentFullName || student.fullName || 'N/A';
