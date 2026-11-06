@@ -285,14 +285,13 @@
           <h4 style="margin:0; color:#3b82f6; font-size:15px; font-weight:bold;">MK COMPUTER CENTER</h4>
           <span style="font-size:9px; letter-spacing:1px; color:#8b949e; display:block; margin-bottom:15px;">STUDENT DIGITAL IDENTIFICATION</span>
           
-          ${photo ? `<img src="${photo}" alt="Student Photo" style="width:85px; height:85px; border-radius:50%; object-fit:cover; border:2px solid #3b82f6; margin-bottom:8px;">` : ''}
+         ${photo ? `<img src="${photo}" alt="Student Photo" style="width:85px; height:85px; border-radius:50%; object-fit:cover; border:2px solid #3b82f6; margin-bottom:8px;">` : ''}
           <h3 style="font-size:18px; font-weight:600; margin-bottom:15px; color:#ffffff;">${name}</h3>
 
           <div style="text-align:left; font-size:13px; line-height:1.8; border-top:1px dashed #30363d; padding-top:12px; margin-bottom:15px;">
             <p style="margin: 4px 0;"><span>Student ID:</span> <strong style="float:right;">${id}</strong></p>
             <p style="margin: 4px 0;"><span>Course:</span> <strong style="float:right;">${course}</strong></p>
             <p style="margin: 4px 0;"><span>Duration:</span> <strong style="float:right;">${duration}</strong></p>
-            <p style="margin: 4px 0;"><span>Reg. Date:</span> <strong style="float:right;">${regDate}</strong></p>
           </div>
 
           ${qr ? `<img src="${qr}" alt="QR Code" style="width:100px; height:100px; margin-bottom:12px;"><br>` : ''}
@@ -302,7 +301,6 @@
       `;
 
       resultCard.style.display = 'block';
-
     } catch (error) {
       console.error("Firestore error:", error);
       errorMsg.innerText = "Error fetching data: " + error.message;
