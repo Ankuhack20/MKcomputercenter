@@ -150,7 +150,6 @@
           <h2 id="form-title">Add Student Profile</h2>
           <form id="student-form" onsubmit="handleFormSubmit(event)">
             <input type="hidden" id="student-id">
-            <input type="hidden" id="student-created-at">
             
             <div class="form-group">
               <label>Student Full Name</label>
@@ -271,20 +270,12 @@
     }
 
     function loadCloudStudents() {
-      db.collection("students").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
+      db.collection("students").onSnapshot((snapshot) => {
         students = [];
         snapshot.forEach((doc) => {
           students.push({ docId: doc.id, ...doc.data() });
         });
         renderStudents();
-      }, (error) => {
-        db.collection("students").onSnapshot((snapshot) => {
-          students = [];
-          snapshot.forEach((doc) => {
-            students.push({ docId: doc.id, ...doc.data() });
-          });
-          renderStudents();
-        });
       });
     }
 
@@ -301,7 +292,6 @@
       const course = document.getElementById('course-name').value;
       const duration = document.getElementById('course-duration').value;
       const fileInput = document.getElementById('student-img-input');
-      const hiddenCreatedDate = document.getElementById('student-created-at').value;
       let imageBase64 = document.getElementById('existing-img-data').value;
 
       if (fileInput.files[0]) {
@@ -310,28 +300,19 @@
         imageBase64 = 'https://via.placeholder.com/150';
       }
 
-      const currentDateStr = new Date().toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      });
-
       const studentData = {
         name,
         fatherName,
         dob,
         course,
         duration,
-        image: imageBase64,
-        updatedAt: currentDateStr
+        image: imageBase64
       };
 
       if (docId) {
-        studentData.createdAt = hiddenCreatedDate || currentDateStr;
         await db.collection("students").doc(docId).update(studentData);
       } else {
         studentData.studentId = 'STU-' + Date.now().toString().slice(-6);
-        studentData.createdAt = currentDateStr;
         await db.collection("students").add(studentData);
       }
 
@@ -615,7 +596,6 @@
       document.getElementById('course-name').value = student.course;
       document.getElementById('course-duration').value = student.duration;
       document.getElementById('existing-img-data').value = student.image;
-      document.getElementById('student-created-at').value = student.createdAt || '';
 
       document.getElementById('form-title').textContent = 'Update Student Profile';
       document.getElementById('submit-btn').textContent = 'Update Profile Changes';
@@ -634,7 +614,6 @@
       document.getElementById('student-form').reset();
       document.getElementById('student-id').value = '';
       document.getElementById('existing-img-data').value = '';
-      document.getElementById('student-created-at').value = '';
       document.getElementById('form-title').textContent = 'Add Student Profile';
       document.getElementById('submit-btn').textContent = 'Save Profile & QR';
       document.getElementById('cancel-btn').style.display = 'none';
