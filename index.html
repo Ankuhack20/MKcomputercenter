@@ -884,8 +884,6 @@
                 }
 
                 if (matchData) {
-                    const hasMod = matchData.updatedAt && matchData.updatedAt !== matchData.createdAt;
-                    const modLabel = hasMod ? `<div>• Mod: ${matchData.updatedAt}</div>` : '';
 
                     resultCard.innerHTML = `
                         <div class="portal-id-header">
@@ -898,10 +896,6 @@
                             <div class="portal-row"><span class="lbl">Student ID</span><span class="val">${matchData.studentId}</span></div>
                             <div class="portal-row"><span class="lbl">Course</span><span class="val">${matchData.course}</span></div>
                             <div class="portal-row"><span class="lbl">Duration</span><span class="val">${matchData.duration}</span></div>
-                            <div class="portal-dates">
-                                <div>• Reg: ${matchData.createdAt || 'N/A'}</div>
-                                ${modLabel}
-                            </div>
                             <div class="portal-qr-wrapper"><div id="portal-qr-target"></div></div>
                         </div>
                     `;
